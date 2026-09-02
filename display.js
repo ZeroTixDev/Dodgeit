@@ -98,7 +98,12 @@ textFont("Maven Pro");
  //   noStroke();
     ctx.fillStyle = "rgb(25, 213, 255)"
  //   text("Dodge It",win.x/2-140,win.y/6);
-    ctx.drawImage(imgLogo,win.x/2-270,-100,550,450);
+    if(!safeDrawImage(imgLogo,win.x/2-270,-100,550,450)){
+      ctx.font = "90px Trebuchet MS";
+      ctx.textAlign = "center";
+      ctx.fillText("Dodge It",win.x/2,win.y/4);
+      ctx.textAlign = "left";
+    }
       this.touchedHeros=false; 
     for(let button of this.buttons){
      button.simulate(dt); 
@@ -202,15 +207,15 @@ textFont("Maven Pro");
     /* drawing teleporter*/
     ctx.fillStyle = "rgb(255,242,0)"
     for(let teleporter of game.world.teleporters){
-    ctx.drawImage(imgTeleporter,win.x/2+(teleporter.x-playerCamera.x)*fov,win.y/2 + (teleporter.y-playerCamera.y)*fov,teleporter.w*fov,teleporter.h*fov);
+    safeDrawImage(imgTeleporter,win.x/2+(teleporter.x-playerCamera.x)*fov,win.y/2 + (teleporter.y-playerCamera.y)*fov,teleporter.w*fov,teleporter.h*fov,true);
     }
     ctx.fillStyle = "rgb(12, 250, 210)"
         for(let teleporter of game.world.areaTeleporters){
       if(teleporter.type=='side'){
 
-        ctx.drawImage(imgSideTeleporter,win.x/2+(teleporter.x-playerCamera.x)*fov,win.y/2 + (teleporter.y-playerCamera.y)*fov,teleporter.w*fov,teleporter.h*fov);
+        safeDrawImage(imgSideTeleporter,win.x/2+(teleporter.x-playerCamera.x)*fov,win.y/2 + (teleporter.y-playerCamera.y)*fov,teleporter.w*fov,teleporter.h*fov,true);
       }else{
-       ctx.drawImage(imgAreaTeleporter,win.x/2+(teleporter.x-playerCamera.x)*fov,win.y/2 + (teleporter.y-playerCamera.y)*fov,teleporter.w*fov,teleporter.h*fov);
+       safeDrawImage(imgAreaTeleporter,win.x/2+(teleporter.x-playerCamera.x)*fov,win.y/2 + (teleporter.y-playerCamera.y)*fov,teleporter.w*fov,teleporter.h*fov,true);
       }
     }
    
@@ -508,9 +513,9 @@ ctx.textAlign = "left"
 
     
   if(game.player.hero =="Jotunn"){
-     ctx.drawImage(imgJotunn,win.x/2-25,win.y/2-28,50,55);
-    ctx.drawImage(imgJotunnPower1,win.x/2-98,win.y-60,60,60);
-    ctx.drawImage(imgJotunnPower2,win.x/2+40,win.y-60,60,60);
+     safeDrawImage(imgJotunn,win.x/2-25,win.y/2-28,50,55);
+    safeDrawImage(imgJotunnPower1,win.x/2-98,win.y-60,60,60);
+    safeDrawImage(imgJotunnPower2,win.x/2+40,win.y-60,60,60);
     for(let enemy of game.enemies){
      if(enemy.slowdown){
       ctx.fillStyle="rgba(0,0,200,0.15)"
@@ -524,13 +529,13 @@ ctx.textAlign = "left"
     }
   }
   if(game.player.hero == "Magmax"){
-   ctx.drawImage(imgMagmax,win.x/2-25,win.y/2-19,50,40); 
-     ctx.drawImage(imgMagmaxPower1,win.x/2-98,win.y-60,60,60);
-     ctx.drawImage(imgMagmaxPower2,win.x/2+40,win.y-60,60,60);
+   safeDrawImage(imgMagmax,win.x/2-25,win.y/2-19,50,40);
+     safeDrawImage(imgMagmaxPower1,win.x/2-98,win.y-60,60,60);
+     safeDrawImage(imgMagmaxPower2,win.x/2+40,win.y-60,60,60);
     if(game.player.cooldown>=1){
-        ctx.drawImage(imgMagmaxPumpkinOff,win.x/2-30,win.y-60,60,60);
+        safeDrawImage(imgMagmaxPumpkinOff,win.x/2-30,win.y-60,60,60);
     }else{
-     ctx.drawImage(imgMagmaxPumpkin,win.x/2-30,win.y-60,60,60);
+     safeDrawImage(imgMagmaxPumpkin,win.x/2-30,win.y-60,60,60);
     }
     if(game.player.flow){
      ctx.fillStyle="rgba(204, 126, 49,0.25)"
@@ -543,12 +548,12 @@ ctx.textAlign = "left"
   }
   if(game.player.hero == "Kopo"){
     if(game.player.isSmall){
-   ctx.drawImage(imgKopo,win.x/2-22,win.y/2-29.5,44,60); 
+   safeDrawImage(imgKopo,win.x/2-22,win.y/2-29.5,44,60);
     }else{
-      ctx.drawImage(imgKopo,win.x/2-27,win.y/2-31.5,55,65); 
+      safeDrawImage(imgKopo,win.x/2-27,win.y/2-31.5,55,65);
     }
-    ctx.drawImage(imgKopoPower1,win.x/2-98,win.y-60,60,60)
-     ctx.drawImage(imgKopoPower2,win.x/2+40,win.y-60,60,60);
+    safeDrawImage(imgKopoPower1,win.x/2-98,win.y-60,60,60)
+     safeDrawImage(imgKopoPower2,win.x/2+40,win.y-60,60,60);
     if(game.player.isSmall){
      ctx.fillStyle="rgba(0,0,50,0.12)"
       ctx.fillRect(win.x/2-98,win.y-60,60,60);

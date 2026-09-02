@@ -1,5 +1,16 @@
 var frames = 0;
 const playSpeed = 60;
+// drawImage throws on an image that failed to load, which kills the render loop
+function safeDrawImage(img,x,y,w,h,fallbackRect){
+  if(img && img.complete && img.naturalWidth > 0){
+    ctx.drawImage(img,x,y,w,h);
+    return true;
+  }
+  if(fallbackRect){
+    ctx.fillRect(x,y,w,h);
+  }
+  return false;
+}
 var endtime = 0;
 var fireworks = [];
 class Firework{
@@ -120,7 +131,7 @@ class MenuButton{
     // ctx.font = ctx.font.replace(/\d+px/, "20px");
       ctx.font ="17px Trebuchet MS"
           ctx.wrapText(`Magmax's Abilites\nJ or Z to flow(makes you go 2x faster)\nK or X to harden(makes you invincible but you can't move and you\ncan harden up to 4 seconds with a cooldown of 3 seconds)`,win.x/2,win.y/2+win.y/12,win.x/2,20);
-      ctx.drawImage(imgMagmaxWow,win.x/2+win.x/3,win.y/2,150,150)
+      safeDrawImage(imgMagmaxWow,win.x/2+win.x/3,win.y/2,150,150)
       this.touched = true;
        this.hero =0;
       ctx.textAlign ="left"
@@ -132,7 +143,7 @@ class MenuButton{
       ctx.fillText("Jotunn",win.x/2,win.y/2+win.y/4-25);
       ctx.font ="17px Trebuchet MS"
        ctx.wrapText(`Jotunn's Abilites\nPassive Ability: If enemies are near you, they get 60% slower(Some enemies aren't affected)\nShard Ability: K or Z to shatter enemies away(Some enemies aren't affected)`,win.x/2,win.y/2+win.y/14,win.x/2,20);
-       ctx.drawImage(imgJotunnThonk,win.x/2+win.x/3,win.y/2,150,150)
+       safeDrawImage(imgJotunnThonk,win.x/2+win.x/3,win.y/2,150,150)
       this.touched = true;
        this.hero =1;
       ctx.textAlign = "left"
@@ -145,7 +156,7 @@ class MenuButton{
       ctx.fillText("Kopo",win.x/2,win.y/2+win.y/4-25);
    ctx.font ="17px Trebuchet MS"
       ctx.wrapText(`Kopo's Abilites\nSmol: J or Z to make itself smaller at the cost of a annoying trail\nDome Hole!(DH) : K or X to place down an aura(which traps enemies for a certain\namount of time and cannot kill you in the aura) when your smol`,win.x/2,win.y/2+win.y/14,win.x/2,20);
-       ctx.drawImage(imgKopoGlasses,win.x/2+win.x/3,win.y/2,150,150)
+       safeDrawImage(imgKopoGlasses,win.x/2+win.x/3,win.y/2,150,150)
       this.touched = true;
        this.hero =2;
       ctx.textAlign = "left"
